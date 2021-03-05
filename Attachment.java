@@ -1,7 +1,7 @@
 public class Attachment {
-    Osoba autor;
-    String naziv;
-    String link;
+	private Osoba autor;
+	private String naziv;
+	private String link;
 
     Attachment(Osoba autor, String naziv, String link) {
         this.autor = autor;
