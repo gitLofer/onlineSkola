@@ -14,10 +14,11 @@ public class Post {
     }
 
     // Konstruktor za komentar tj. post koji nije original
+    // U praksi, mozda nepotrebno. Ostaviti radi ideje
     Post(Osoba autor, Date datumObjave, List<Post> komentari, String objavaTekst, Post glava)
     {
-        List<Post> temp = glava.getKomentari();
-        temp.add(new Post(autor, datumObjave, komentari, objavaTekst))        
+        Post(autor, datumObjave, komentari, objavaTekst);
+        glava.komentari.add(this);    
     }
 
     // Nesto trebamo da uradimo za razlikovanje Material i Assignment. Neku formu predaje da ima As dok Mat ima neki "preview"?
