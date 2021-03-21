@@ -1,8 +1,10 @@
+import java.util.*;
+
 public class Profesor extends Osoba {
 	private List<String> odeljenja;
 	private String predmet;
-    Profesor(String ime, String prezime, int godiste, Pol pol, String email, List<String> odeljenja, String predmet){
-        super(ime, prezime, godiste, pol, email);
+    Profesor(String ime, String prezime, int godiste, Pol pol, String email, int id, String sifra, List<String> odeljenja, String predmet){
+        super(ime, prezime, godiste, pol, email, id, sifra);
         this.odeljenja = odeljenja;
         this.predmet = predmet;
     }
@@ -21,5 +23,5 @@ public class Profesor extends Osoba {
     public String getPredmet(){
     	return predmet;
     }
-    
+
 }

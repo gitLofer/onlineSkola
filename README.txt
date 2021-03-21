@@ -2,14 +2,14 @@
 Online skola - Java projekat za OOP
 
 KLASE:
-Osoba (ime + prezime, godiste, pol, mail, slika)
+Osoba (ime + prezime, godiste, pol, mail, slika, id, sifra)
 - Profesor (List<Odeljenje>, Predmet)
 - Ucenik (List<Attachment> MojRad)
 
 Post (Osoba, Datum, List<Post> Komentari, Text)
-- Assignment (Rok, List<Attachment> ZaUraditi, List<Attachment> DobijeniRad)
-- Material (List<Attachment> Materijal)
+- Assignment (Rok, Attachment ZaUraditi, List<Attachment> DobijeniRad)
+- Material (Attachment Materijal)
 
-Classroom (Profesor, List<Ucenik>, Naziv, Odeljenje, List<Post> Stvari)
+Classroom (Profesor, List<Ucenik>, Naziv, Odeljenje, List<Post> Stvari, id)
 
-Attachment (Osoba, ime, link)
+Attachment (Osoba, ime, List<File>)

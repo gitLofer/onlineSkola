@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Attachment {
 	private Osoba autor;
 	private String naziv;
@@ -19,6 +21,7 @@ public class Attachment {
     public Osoba getAutor() {
         return autor;
     }
+    
     public void setLink(String link) {
         this.link = link;
     }

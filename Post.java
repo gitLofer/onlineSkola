@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Post {
-    Osoba autor;
-    Date datumObjave; // Videti https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
-    List<Post> komentari;
-    String objavaTekst;
+    private Osoba autor;
+    private Date datumObjave; // Videti https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
+    private List<Post> komentari;
+    private String objavaTekst;
 
     Post(Osoba autor, Date datumObjave, List<Post> komentari, String objavaTekst) {
         this.autor = autor;
@@ -17,7 +17,7 @@ public class Post {
     // U praksi, mozda nepotrebno. Ostaviti radi ideje
     Post(Osoba autor, Date datumObjave, List<Post> komentari, String objavaTekst, Post glava)
     {
-        Post(autor, datumObjave, komentari, objavaTekst);
+        this(autor, datumObjave, komentari, objavaTekst);
         glava.komentari.add(this);    
     }
 
