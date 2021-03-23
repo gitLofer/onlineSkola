@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class Classroom {
-	private Profesor prof;
-	private List<Ucenik> ucenici;
+	private Osoba prof;
+	private List<Osoba> ucenici;
 	private String naziv, odeljenje;
 	private List<Post> postovi;
 	private int id;
 	
-	Classroom(Profesor prof, List<Ucenik> ucenici, String naziv, String odeljenje, List<Post> postovi, int id){
+	Classroom(Osoba prof, List<Osoba> ucenici, String naziv, String odeljenje, List<Post> postovi, int id){
 		this.prof = prof;
 		this.ucenici = ucenici;
 		this.naziv = naziv;
@@ -17,10 +17,10 @@ public class Classroom {
 	}
 	
 	// Getteri i Setteri
-	public Profesor getProf() {
+	public Osoba getProf() {
         return prof;
     }
-	public List<Ucenik> getUcenici() {
+	public List<Osoba> getUcenici() {
         return ucenici;
     }
 	public String getNaziv() {
@@ -36,10 +36,10 @@ public class Classroom {
         return id;
     }
     
-    public void setProf(Profesor prof) {
+    public void setProf(Osoba prof) {
     	this.prof = prof;
     }
-    public void setUcenici(List<Ucenik> ucenici) {
+    public void setUcenici(List<Osoba> ucenici) {
     	this.ucenici = ucenici;
     }
     public void setNaziv(String naziv) {
