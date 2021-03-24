@@ -1,9 +1,9 @@
 // klasa gde radim testiranje, radi sta hoces ovde
-// Update 23/03: Osoba ima JSON funkcionalnost
 public class testing {
     public static void main(String[] args) {
-        Osoba o = new Osoba(123);
+        Osoba o = new Osoba();
+        o.saveToJSON();
         System.out.println(o);
-        Osoba c = new Osoba();
+        // JSON_Interface.deleteFromJSON(123, "osobe.json");
     }
 }

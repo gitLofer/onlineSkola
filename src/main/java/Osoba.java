@@ -41,7 +41,6 @@ public class Osoba implements JSON_Interface<Osoba> {
         this.sifra = sifra;
     }
 
-    // bkv nije radilo juce a sada radi, nzm
     Osoba(int id) {
         Osoba o = new Osoba();
         o = o.loadFromJSON(id);
@@ -95,8 +94,6 @@ public class Osoba implements JSON_Interface<Osoba> {
     @Override
     public void saveToJSON() {
         // DEBUG: System.out.println("Saving!");
-
-        // Dodavanje u JSON objekat - ne pitaj zasto ima 2 try-a
         try {
             JSONParser parser = new JSONParser();
             Reader reader = new FileReader(jsonLoc + osobeJSONLoc);
