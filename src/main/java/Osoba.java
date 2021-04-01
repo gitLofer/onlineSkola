@@ -22,16 +22,6 @@ public class Osoba implements JSON_Interface<Osoba> {
     private int id;
     private String sifra;
 
-    // Ne brisi ovo dok loadFromJSON ne proradi
-    Osoba() {
-        this.ime = "Ime";
-        this.prezime = "Prezime";
-        this.pol = Pol.Musko;
-        this.email = "email@gmail.com";
-        this.id = 123;
-        this.sifra = "123";
-    }
-
     Osoba(String ime, String prezime, Pol pol, String email, int id, String sifra){
         this.ime = ime;
         this.prezime = prezime;
@@ -42,8 +32,7 @@ public class Osoba implements JSON_Interface<Osoba> {
     }
 
     Osoba(int id) {
-        Osoba o = new Osoba();
-        o = o.loadFromJSON(id);
+        Osoba o = loadFromJSON(id);
         this.ime = o.ime;
         this.prezime = o.prezime;
         this.pol = o.pol;
