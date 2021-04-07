@@ -1,7 +1,7 @@
 # Online škola - Java projekat za OOP
 
 ## Projekat
-Cilj projekta je rekreacija [Google Classroom-a](https://classroom.google.com/) na unikatana i poboljšan način.  
+Cilj projekta je rekreacija [Google Classroom-a](https://classroom.google.com/) na unikantan i poboljšan način.  
 Ispod se nalazi lista klasa koje su planirane za sada, menjaće se kako projekat napreduje.
 
 ## Klase
