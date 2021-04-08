@@ -23,7 +23,7 @@ Attachment (Osoba, ime, List\<File\>)
   - [X] *Napraviti sve potrebne .json fajlove i popuniti sa test primerom*
   - [X] *Namestiti da radi ijedna klasa (Osoba) sa funkcija loadFromJSON i saveToJSON*
   - [X] *Napraviti public static funkciju interface-a za brisanje*
-  - [ ] *Povezati sve potrebne klase na interface*
+  - [X] *Povezati sve potrebne klase na interface*
   - [ ] *Napraviti exception za InvalidIDLookup*
 - [ ] *Stvoriti osnovnu funkcionalnost (u vidu terminala)*
 - [ ] *Pretvoriti prethodnu funkcionalnost u GUI (JavaFX, JFrame, etc.)*
