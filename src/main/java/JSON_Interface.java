@@ -17,10 +17,10 @@ public interface JSON_Interface<selfObject> {
     selfObject loadFromJSON (int id);
     void saveToJSON();
 
-    static void deleteFromJSON(int id, String JSON_Loc) {
+    static void deleteFromJSON(int id, String jsonLocFIle) {
         try {
             JSONParser parser = new JSONParser();
-            Reader reader = new FileReader(jsonLoc + JSON_Loc);
+            Reader reader = new FileReader(jsonLoc + jsonLocFIle);
             JSONArray jsonArray = (JSONArray) parser.parse(reader);
 
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -30,7 +30,7 @@ public interface JSON_Interface<selfObject> {
                     break;
                 }
             }
-            try (FileWriter file = new FileWriter(jsonLoc + JSON_Loc)) {
+            try (FileWriter file = new FileWriter(jsonLoc + jsonLocFIle)) {
                 file.write(jsonArray.toJSONString());
             } catch (IOException e) {
                 e.printStackTrace();
