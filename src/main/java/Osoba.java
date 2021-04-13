@@ -69,14 +69,17 @@ public class Osoba implements JSON_Interface<Osoba> {
                     );
                 }
             }
+            //user defined exception
+            IdLookupException ex = new IdLookupException("Invalid ID lookup");
+            throw ex;
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (IdLookupException e) {
+        	e.printStackTrace();
         }
-        // TODO: Pretvoriti ovo u IDLookupException
-        System.out.println("Invalid ID lookup");
         return null;
     }
 
@@ -111,16 +114,16 @@ public class Osoba implements JSON_Interface<Osoba> {
         }
     }
 
-    // Autogenerisano je ali izgleda kao smece sta god uradio. Popravi ako hoces
+
     @Override
     public String toString() {
-        return "Osoba{" +
-                "ime='" + ime + '\'' +
-                ", prezime='" + prezime + '\'' +
-                ", pol=" + pol +
-                ", email='" + email + '\'' +
-                ", id=" + id +
-                ", sifra='" + sifra + '\'' +
+        return "Osoba{ \n" +
+                "\time='" + ime + '\n' +
+                "\t, prezime='" + prezime + '\n' +
+                "\t, pol=" + pol +
+                "\t, email='" + email + '\n' +
+                "\t, id=" + id + '\n' +
+                "\t, sifra='" + sifra + '\n' +
                 '}';
     }
 
