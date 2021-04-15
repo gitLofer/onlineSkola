@@ -118,12 +118,12 @@ public class Osoba implements JSON_Interface<Osoba> {
     @Override
     public String toString() {
         return "Osoba{ \n" +
-                "\time='" + ime + '\n' +
-                "\t, prezime='" + prezime + '\n' +
-                "\t, pol=" + pol +
-                "\t, email='" + email + '\n' +
-                "\t, id=" + id + '\n' +
-                "\t, sifra='" + sifra + '\n' +
+                "\time='" + ime + "',\n" +
+                "\tprezime='" + prezime + "',\n" +
+                "\tpol='" + pol + "',\n" +
+                "\temail='" + email + "',\n" +
+                "\tid='" + id + "',\n" +
+                "\tsifra='" + sifra + "'\n" +
                 '}';
     }
 
