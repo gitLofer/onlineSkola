@@ -69,6 +69,19 @@ public class Attachment implements JSON_Interface<Attachment> {
             obj.put("autorID", this.autorID);
             obj.put("naziv", this.naziv);
             obj.put("id", this.id);
+
+            for (int i = 0; i < jsonArray.size(); ++i) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                    jsonArray.set(i, obj);
+                    try (FileWriter file = new FileWriter(jsonLoc + attachJSONLoc)) {
+                        file.write(jsonArray.toJSONString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+            }
             jsonArray.add(obj);
 
             // Pisanje u JSON fajl - Ubije formatiranje jer je sve u jednoj liniji, rip

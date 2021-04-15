@@ -1,9 +1,9 @@
 // klasa gde radim testiranje, radi sta hoces ovde
 public class testing {
     public static void main(String[] args) {
-        Post p = new Post(2);
-        System.out.println(p);
-        // p.saveToJSON(2);
-        // JSON_Interface.deleteFromJSON(2, "posts.json");
+        // JSON_Interface.deleteFromJSON(482917684, "osobe.json");
+        Osoba o = new Osoba(482917685);
+        o.setIme("Milkica");
+        o.saveToJSON();
     }
 }

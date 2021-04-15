@@ -98,11 +98,25 @@ public class Osoba implements JSON_Interface<Osoba> {
             obj.put("email", this.email);
             obj.put("id", this.id);
             obj.put("sifra", this.sifra);
+
+            for (int i = 0; i < jsonArray.size(); ++i) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                    jsonArray.set(i, obj);
+                    try (FileWriter file = new FileWriter(jsonLoc + osobeJSONLoc)) {
+                        file.write(jsonArray.toJSONString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+            }
             jsonArray.add(obj);
 
             // Pisanje u JSON fajl - Ubije formatiranje jer je sve u jednoj liniji, rip
             try (FileWriter file = new FileWriter(jsonLoc + osobeJSONLoc)) {
                 file.write(jsonArray.toJSONString());
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }

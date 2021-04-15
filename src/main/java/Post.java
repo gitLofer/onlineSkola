@@ -125,6 +125,18 @@ public class Post implements JSON_Interface<Post>{
             }
             obj.put("komentari", comments);
 
+            for (int i = 0; i < jsonArray.size(); ++i) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                    jsonArray.set(i, obj);
+                    try (FileWriter file = new FileWriter(jsonLoc + postsJSONLoc)) {
+                        file.write(jsonArray.toJSONString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+            }
             jsonArray.add(obj);
 
             // Pisanje u JSON fajl - Ubije formatiranje jer je sve u jednoj liniji, rip
@@ -140,30 +152,6 @@ public class Post implements JSON_Interface<Post>{
             e.printStackTrace();
         }
     }
-
-//    Update: Nista od ovoga za sada
-//    // Ovako komentari izgledaju ako radimo kao IG/Reddit
-//    //
-//    // A
-//    // --- A-1
-//    //  |
-//    //  |- A-2
-//    //  |
-//    //  |- A-3
-//    //  | |
-//    //  | |- A-3-1
-//    //  | |
-//    //  | |- A-3-2
-//    //  |
-//    //  |- A-4
-//    private List<Komentar> nTreeCommentSearch(JSONArray comments_in_JSON) {
-//
-//
-//
-//        return null;
-//    }
-
-
 
     // Nesto trebamo da uradimo za razlikovanje Material i Assignment. Neku formu predaje da ima As dok Mat ima neki "preview"?
     // Ili da napravimo da Assignment nasledjuje Material; tu bi Material zapravo bila ova klasa tj. Post?
