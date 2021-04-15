@@ -86,13 +86,17 @@ public class Post implements JSON_Interface<Post>{
                     return (new Post(autorID, datumObjave, tekst, comments, attachment, id));
                 }
             }
+            //user defined exception
+            IdLookupException ex = new IdLookupException("Invalid ID lookup");
+            throw ex;
+            
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (IdLookupException e) {
+        	e.printStackTrace();
         }
-        // TODO: Pretvoriti ovo u IDLookupException
-        System.out.println("Invalid ID lookup");
         return null;
     }
     @Override
@@ -159,14 +163,14 @@ public class Post implements JSON_Interface<Post>{
     // DEBUG
     @Override
     public String toString() {
-        return "Post{" +
-                "postsJSONLoc='" + postsJSONLoc + '\'' +
-                ", autorID=" + autorID +
-                ", datumObjave=" + datumObjave +
-                ", objavaTekst='" + objavaTekst + '\'' +
-                ", komentari=" + komentari +
-                ", attachments=" + attachments +
-                ", id=" + id +
+        return "Post{ \n" +
+                "\tpostsJSONLoc='" + postsJSONLoc + "',\n" +
+                "\tautorID='" + autorID + "',\n" +
+                "\tdatumObjave='" + datumObjave + "',\n" +
+                "\tobjavaTekst='" + objavaTekst + "',\n" +
+                "\tkomentari='" + komentari + "',\n" +
+                "\tattachments='" + attachments + "',\n" +
+                "\tid='" + id + "'\n" +
                 '}';
     }
 
@@ -181,7 +185,9 @@ public class Post implements JSON_Interface<Post>{
         return objavaTekst;
     }
 
-    public void setAutorID(int autorID) { this.autorID = autorID; }
+    public void setAutorID(int autorID) { 
+    	this.autorID = autorID; 
+    }
     public void setDatumObjave(int datumObjave) {
         this.datumObjave = datumObjave;
     }

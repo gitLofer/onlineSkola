@@ -46,14 +46,17 @@ public class Attachment implements JSON_Interface<Attachment> {
                     );
                 }
             }
+            //user defined exception
+            IdLookupException ex = new IdLookupException("Invalid ID lookup");
+            throw ex;
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (IdLookupException e) {
+        	e.printStackTrace();
         }
-        // TODO: Pretvoriti ovo u IDLookupException
-        System.out.println("Invalid ID lookup");
         return null;
     }
 
@@ -100,10 +103,10 @@ public class Attachment implements JSON_Interface<Attachment> {
 
     @Override
     public String toString() {
-        return "Attachment{" +
-                "autorID=" + autorID +
-                ", naziv='" + naziv + '\'' +
-                '}';
+        return "Attachment{ \n" +
+                "\tautorID='" + autorID + "',\n" +
+                "\tnaziv='" + naziv + "'\n" +
+                "}";
     }
 
     // Getteri i Setteri
@@ -113,7 +116,9 @@ public class Attachment implements JSON_Interface<Attachment> {
     public int getAutorID() {
         return autorID;
     }
-    public int getId() { return id; }
+    public int getId() { 
+    	return id;
+    }
 
     public void setNaziv(String naziv) {
         this.naziv = naziv;
@@ -121,5 +126,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     public void setAutorID(int autorID) {
         this.autorID = autorID;
     }
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+    	this.id = id; 
+    }
 }
