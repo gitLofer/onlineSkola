@@ -18,12 +18,12 @@ Attachment (Osoba, ime, List\<File\>)
 ## TODO
 - [x] *Napraviti ReadMe koji liči na nesto*
 - [x] *Prebaciti sve na Maven radi lakšeg zajedničkog rada (i biblioteka)*
-- [ ] *Zavrsiti čuvanje podataka i njihov pristup (JSON)*
+- [x] *Zavrsiti čuvanje podataka i njihov pristup (JSON)*
   - [X] *Napraviti Interface za JSON interakciju*
   - [X] *Napraviti sve potrebne .json fajlove i popuniti sa test primerom*
   - [X] *Namestiti da radi ijedna klasa (Osoba) sa funkcija loadFromJSON i saveToJSON*
   - [X] *Napraviti public static funkciju interface-a za brisanje*
   - [X] *Povezati sve potrebne klase na interface*
-  - [ ] *Napraviti exception za InvalidIDLookup*
+  - [x] *Napraviti exception za InvalidIDLookup*
 - [ ] *Stvoriti osnovnu funkcionalnost (u vidu terminala)*
 - [ ] *Pretvoriti prethodnu funkcionalnost u GUI (JavaFX, JFrame, etc.)*
