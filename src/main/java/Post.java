@@ -16,9 +16,9 @@ public class Post implements JSON_Interface<Post>{
     private String objavaTekst;
     private ArrayList<Komentar> komentari;
     private ArrayList<Integer> attachments;
-    private int id;
+    private String id;
 
-    Post(int autorID, int datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<Integer> attachments, int id) {
+    Post(int autorID, int datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<Integer> attachments, String id) {
         this.autorID = autorID;
         this.datumObjave = datumObjave;
         this.objavaTekst = objavaTekst;
@@ -27,7 +27,7 @@ public class Post implements JSON_Interface<Post>{
         this.id = id;
     }
 
-    Post (int id) {
+    Post (String id) {
         Post p = loadFromJSON(id);
         this.autorID = p.autorID;
         this.datumObjave = p.datumObjave;
@@ -38,7 +38,7 @@ public class Post implements JSON_Interface<Post>{
     }
 
     @Override
-    public Post loadFromJSON(int id) {
+    public Post loadFromJSON(String id) {
 
         JSONParser parser = new JSONParser();
         try (Reader reader = new FileReader(jsonLoc + postsJSONLoc)) {
@@ -47,10 +47,10 @@ public class Post implements JSON_Interface<Post>{
             for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
                 // DEBUG: System.out.println("Object loaded: " + jsonObject);
 
-                int fetchedID = ((Long) jsonObject.get("id")).intValue();
+                String fetchedID = jsonObject.get("id").toString();
 
                 // otprilike loadFromJSONObject
-                if (fetchedID == id) {
+                if (fetchedID.equals(id)) {
                     // DEBUG: System.out.println("Matching Post ID found");
                     int autorID = ((Long) jsonObject.get("autor")).intValue();
                     int datumObjave = ((Long) jsonObject.get("datumObjave")).intValue();
@@ -62,7 +62,7 @@ public class Post implements JSON_Interface<Post>{
                         attachment.add( Integer.valueOf( ( (Long) att.get(i)).intValue() ) );
                     }
 
-                    // TODO: Prebaciti na n-Tree (mozda?)
+                    
                     ArrayList<Komentar> comments = new ArrayList<>();
 
                     JSONArray commentArray = (JSONArray) jsonObject.get("komentari");
@@ -131,7 +131,7 @@ public class Post implements JSON_Interface<Post>{
 
             for (int i = 0; i < jsonArray.size(); ++i) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                if (jsonObject.get("id").toString().equals(this.id)) {
                     jsonArray.set(i, obj);
                     try (FileWriter file = new FileWriter(jsonLoc + postsJSONLoc)) {
                         file.write(jsonArray.toJSONString());

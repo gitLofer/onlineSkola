@@ -14,10 +14,10 @@ public interface JSON_Interface<selfObject> {
     final String jsonLoc = "src/main/resources/json/";
 
     // Tutorijal: https://mkyong.com/java/json-simple-example-read-and-write-json/
-    selfObject loadFromJSON (int id);
+    selfObject loadFromJSON (String id);
     void saveToJSON();
 
-    static void deleteFromJSON(int id, String jsonLocFIle) {
+    static void deleteFromJSON(String id, String jsonLocFIle) {
         try {
             JSONParser parser = new JSONParser();
             Reader reader = new FileReader(jsonLoc + jsonLocFIle);
@@ -25,7 +25,7 @@ public interface JSON_Interface<selfObject> {
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject temp = (JSONObject) jsonArray.get(i);
-                if (((Long) temp.get("id")).intValue() == id) {
+                if (temp.get("id").toString().equals(id)) {
                     jsonArray.remove(i);
                     break;
                 }

@@ -19,10 +19,10 @@ public class Osoba implements JSON_Interface<Osoba> {
     private String prezime;
     private Pol pol;
     private String email;
-    private int id;
+    private String id;
     private String sifra;
 
-    Osoba(String ime, String prezime, Pol pol, String email, int id, String sifra){
+    Osoba(String ime, String prezime, Pol pol, String email, String id, String sifra){
         this.ime = ime;
         this.prezime = prezime;
         this.pol = pol;
@@ -31,7 +31,7 @@ public class Osoba implements JSON_Interface<Osoba> {
         this.sifra = sifra;
     }
 
-    Osoba(int id) {
+    Osoba(String id) {
         Osoba o = loadFromJSON(id);
         this.ime = o.ime;
         this.prezime = o.prezime;
@@ -42,7 +42,7 @@ public class Osoba implements JSON_Interface<Osoba> {
     }
 
     @Override
-    public Osoba loadFromJSON(int id) {
+    public Osoba loadFromJSON(String id) {
         JSONParser parser = new JSONParser();
         try (Reader reader = new FileReader(jsonLoc + osobeJSONLoc)) {
 
@@ -55,10 +55,10 @@ public class Osoba implements JSON_Interface<Osoba> {
 
                 // Fun fact: 'Number' u JSON je 'Long'. Ne 'long', nego 'Long'
                 // Template za casting JSON "Number" u "int": ((Long) returnVal).intValue()
-                int fetchedID = ((Long) jsonObject.get("id")).intValue();
+                String fetchedID = jsonObject.get("id").toString();
                 // DEBUG: System.out.println(fetchedID + " =? " + id);
 
-                if (fetchedID == id) {
+                if (fetchedID.equals(id)) {
                     return new Osoba(
                             (String) jsonObject.get("ime"),
                             (String) jsonObject.get("prezime"),
@@ -101,7 +101,7 @@ public class Osoba implements JSON_Interface<Osoba> {
 
             for (int i = 0; i < jsonArray.size(); ++i) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                if (jsonObject.get("id").toString().equals(this.id)) {
                     jsonArray.set(i, obj);
                     try (FileWriter file = new FileWriter(jsonLoc + osobeJSONLoc)) {
                         file.write(jsonArray.toJSONString());
@@ -154,7 +154,7 @@ public class Osoba implements JSON_Interface<Osoba> {
     public void setPrezime(String prezime) {
         this.prezime = prezime;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public void setSifra(String sifra) {
@@ -164,7 +164,7 @@ public class Osoba implements JSON_Interface<Osoba> {
     public String getEmail() {
         return email;
     }
-    public int getId() {
+    public String getId() {
         return id;
     }
     public String getSifra() {

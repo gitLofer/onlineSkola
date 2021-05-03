@@ -12,15 +12,15 @@ public class Attachment implements JSON_Interface<Attachment> {
     private final String attachJSONLoc = "attachment.json";
     private int autorID;
 	private String naziv;
-	private int id;
+	private String id;
 
-    Attachment(int autorID, String naziv, int id) {
+    Attachment(int autorID, String naziv, String id) {
         this.autorID = autorID;
         this.naziv = naziv;
         this.id = id;
     }
 
-    Attachment(int id) {
+    Attachment(String id) {
         Attachment a = loadFromJSON(id);
         this.autorID = a.autorID;
         this.naziv = a.naziv;
@@ -28,7 +28,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     }
 
     @Override
-    public Attachment loadFromJSON(int id) {
+    public Attachment loadFromJSON(String id) {
         JSONParser parser = new JSONParser();
         try (Reader reader = new FileReader(jsonLoc + attachJSONLoc)) {
 
@@ -37,8 +37,8 @@ public class Attachment implements JSON_Interface<Attachment> {
 
             // Loop for finding JSONObject with given id
             for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
-                int fetchedID = ((Long) jsonObject.get("id")).intValue();
-                if (fetchedID == id) {
+                String fetchedID = jsonObject.get("id").toString();
+                if (fetchedID.equals(id)) {
                     return new Attachment(
                             ((Long) jsonObject.get("autorID")).intValue(),
                             (String) jsonObject.get("naziv"),
@@ -75,7 +75,7 @@ public class Attachment implements JSON_Interface<Attachment> {
 
             for (int i = 0; i < jsonArray.size(); ++i) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                if (((Long) jsonObject.get("id")).intValue() == this.id) {
+                if (jsonObject.get("id").toString().equals(this.id)) {
                     jsonArray.set(i, obj);
                     try (FileWriter file = new FileWriter(jsonLoc + attachJSONLoc)) {
                         file.write(jsonArray.toJSONString());
@@ -116,7 +116,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     public int getAutorID() {
         return autorID;
     }
-    public int getId() { 
+    public String getId() { 
     	return id;
     }
 
@@ -126,7 +126,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     public void setAutorID(int autorID) {
         this.autorID = autorID;
     }
-    public void setId(int id) {
+    public void setId(String id) {
     	this.id = id; 
     }
 }

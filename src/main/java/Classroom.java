@@ -5,9 +5,9 @@ public class Classroom {
 	private List<Osoba> ucenici;
 	private String naziv, odeljenje;
 	private List<Post> postovi;
-	private int id;
+	private String id;
 	
-	Classroom(Osoba prof, List<Osoba> ucenici, String naziv, String odeljenje, List<Post> postovi, int id){
+	Classroom(Osoba prof, List<Osoba> ucenici, String naziv, String odeljenje, List<Post> postovi, String id){
 		this.prof = prof;
 		this.ucenici = ucenici;
 		this.naziv = naziv;
@@ -32,7 +32,7 @@ public class Classroom {
 	public List<Post> getPostovi() {
         return postovi;
     }
-	public int getId() {
+	public String getId() {
         return id;
     }
     
@@ -51,7 +51,7 @@ public class Classroom {
     public void setPostovi(List<Post> postovi) {
     	this.postovi = postovi;
     }
-    public void setId(int id) {
+    public void setId(String id) {
     	this.id = id;
     }
 }
