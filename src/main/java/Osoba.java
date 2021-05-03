@@ -33,11 +33,39 @@ public class Osoba implements JSON_Interface<Osoba> {
 
     Osoba(String id) {
         Osoba o = loadFromJSON(id);
+        if(o == null) {
+        	this.ime = null;
+            this.prezime = null;
+            this.pol = Pol.Musko;
+            this.email = null;
+            this.id = null;
+            this.sifra = null;
+            return;
+        }
         this.ime = o.ime;
         this.prezime = o.prezime;
         this.pol = o.pol;
         this.email = o.email;
         this.id = id;
+        this.sifra = o.sifra;
+    }
+    
+    Osoba(String email, String sifra){
+    	Osoba o = logIn(email, sifra);
+    	if(o == null) {
+        	this.ime = null;
+            this.prezime = null;
+            this.pol = Pol.Musko;
+            this.email = null;
+            this.id = null;
+            this.sifra = null;
+            return;
+        }
+        this.ime = o.ime;
+        this.prezime = o.prezime;
+        this.pol = o.pol;
+        this.email = o.email;
+        this.id = o.id;
         this.sifra = o.sifra;
     }
 
@@ -79,6 +107,35 @@ public class Osoba implements JSON_Interface<Osoba> {
             e.printStackTrace();
         } catch (IdLookupException e) {
         	e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Osoba logIn(String email, String sifra){
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader(jsonLoc + osobeJSONLoc)) {
+
+            JSONArray jsonArray = (JSONArray) parser.parse(reader);
+            
+            for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
+                String fetchedEmail = jsonObject.get("email").toString();
+                String fetchedSifra = jsonObject.get("sifra").toString();
+
+                if (email.equals(fetchedEmail) && sifra.equals(fetchedSifra)) {
+                    return new Osoba(
+                            (String) jsonObject.get("ime"),
+                            (String) jsonObject.get("prezime"),
+                            ((Boolean) jsonObject.get("muskoJe")) ? Pol.Musko : Pol.Zensko,
+                            (String) jsonObject.get("email"),
+                            (String) jsonObject.get("id"),
+                            (String) jsonObject.get("sifra")
+                    );
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return null;
     }

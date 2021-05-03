@@ -11,7 +11,24 @@ public class Program {
 		while(!b) {
 			int izbor = sken.nextInt();
 			if(izbor == 1) {
+				String sifra, email, kriptosifra;
+				Osoba o;
+				while(true) {
+					System.out.print("Ukucajte vase podatke ispod da biste se ulogovali: \n");
+					System.out.print("\tEmail: ");
+					email = sken.next();
+					System.out.print("\tSifra: ");
+					sifra = sken.next();
+					kriptosifra = org.apache.commons.codec.digest.DigestUtils.sha256Hex(sifra);
+					o = new Osoba(email, kriptosifra);
+					if(o.getIme() != null) {
+						break;
+					}
+					System.out.print("\tPogresno ste ukucali email ili sifru\n");
+				}
+				System.out.print(o);
 				b = true;
+				
 			}
 			else if(izbor == 2) {
 				System.out.print("Ukucajte vase podatke ispod da biste napravili nalog: \n");
