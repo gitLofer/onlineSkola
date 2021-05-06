@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.*;
 
 enum Pol
 {
@@ -21,14 +22,16 @@ public class Osoba implements JSON_Interface<Osoba> {
     private String email;
     private String id;
     private String sifra;
+    private ArrayList<String> idKlasruma;
 
-    Osoba(String ime, String prezime, Pol pol, String email, String id, String sifra){
+    Osoba(String ime, String prezime, Pol pol, String email, String id, String sifra, ArrayList<String> klasrumi){
         this.ime = ime;
         this.prezime = prezime;
         this.pol = pol;
         this.email = email;
         this.id = id;
         this.sifra = sifra;
+        this.idKlasruma = klasrumi;
     }
 
     Osoba(String id) {
@@ -40,6 +43,7 @@ public class Osoba implements JSON_Interface<Osoba> {
             this.email = null;
             this.id = null;
             this.sifra = null;
+            this.idKlasruma = null;
             return;
         }
         this.ime = o.ime;
@@ -48,6 +52,7 @@ public class Osoba implements JSON_Interface<Osoba> {
         this.email = o.email;
         this.id = id;
         this.sifra = o.sifra;
+        this.idKlasruma = o.idKlasruma;
     }
     
     Osoba(String email, String sifra){
@@ -59,6 +64,7 @@ public class Osoba implements JSON_Interface<Osoba> {
             this.email = null;
             this.id = null;
             this.sifra = null;
+            this.idKlasruma = null;
             return;
         }
         this.ime = o.ime;
@@ -67,6 +73,7 @@ public class Osoba implements JSON_Interface<Osoba> {
         this.email = o.email;
         this.id = o.id;
         this.sifra = o.sifra;
+        this.idKlasruma = o.idKlasruma;
     }
 
     @Override
@@ -84,16 +91,22 @@ public class Osoba implements JSON_Interface<Osoba> {
                 // Fun fact: 'Number' u JSON je 'Long'. Ne 'long', nego 'Long'
                 // Template za casting JSON "Number" u "int": ((Long) returnVal).intValue()
                 String fetchedID = jsonObject.get("id").toString();
-                // DEBUG: System.out.println(fetchedID + " =? " + id);
 
                 if (fetchedID.equals(id)) {
+                	
+                	JSONArray classroomArray = (JSONArray) jsonObject.get("klasrumi");
+                	ArrayList<String> classrooms = new ArrayList<>();
+                	for (int i = 0; i < classroomArray.size(); ++i) {
+                        classrooms.add(classroomArray.get(i).toString());
+                    }
                     return new Osoba(
-                            (String) jsonObject.get("ime"),
-                            (String) jsonObject.get("prezime"),
-                            ((Boolean) jsonObject.get("muskoJe")) ? Pol.Musko : Pol.Zensko,
-                            (String) jsonObject.get("email"),
-                            id,
-                            (String) jsonObject.get("sifra")
+	                        (String) jsonObject.get("ime"),
+	                        (String) jsonObject.get("prezime"),
+	                        ((Boolean) jsonObject.get("muskoJe")) ? Pol.Musko : Pol.Zensko,
+	                        (String) jsonObject.get("email"),
+	                        id,
+	                        (String) jsonObject.get("sifra"),
+	                        classrooms
                     );
                 }
             }
@@ -122,13 +135,25 @@ public class Osoba implements JSON_Interface<Osoba> {
                 String fetchedSifra = jsonObject.get("sifra").toString();
 
                 if (email.equals(fetchedEmail) && sifra.equals(fetchedSifra)) {
+                	
+                	JSONArray classroomArray = (JSONArray) jsonObject.get("klasrumi");
+                	ArrayList<String> classrooms = new ArrayList<>();
+                	if(classroomArray != null) {
+	                	for (int i = 0; i < classroomArray.size(); ++i) {
+	                        classrooms.add(classroomArray.get(i).toString());
+	                    }
+                	}
+                	else {
+                		classrooms = null;
+                	}
                     return new Osoba(
                             (String) jsonObject.get("ime"),
                             (String) jsonObject.get("prezime"),
                             ((Boolean) jsonObject.get("muskoJe")) ? Pol.Musko : Pol.Zensko,
                             (String) jsonObject.get("email"),
                             (String) jsonObject.get("id"),
-                            (String) jsonObject.get("sifra")
+                            (String) jsonObject.get("sifra"),
+                            classrooms
                     );
                 }
             }
@@ -155,6 +180,7 @@ public class Osoba implements JSON_Interface<Osoba> {
             obj.put("email", this.email);
             obj.put("id", this.id);
             obj.put("sifra", this.sifra);
+            obj.put("klasrumi", this.idKlasruma);
 
             for (int i = 0; i < jsonArray.size(); ++i) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -195,6 +221,7 @@ public class Osoba implements JSON_Interface<Osoba> {
                 "\temail='" + email + "',\n" +
                 "\tid='" + id + "',\n" +
                 "\tsifra='" + sifra + "'\n" +
+                "\tklasrumi='" + idKlasruma + "'\n" +
                 '}';
     }
 
@@ -217,7 +244,13 @@ public class Osoba implements JSON_Interface<Osoba> {
     public void setSifra(String sifra) {
         this.sifra = sifra;
     }
+    public void setKlasrume(ArrayList<String> klasrumi) {
+        this.idKlasruma = klasrumi;
+    }
 
+    public ArrayList<String> getKlasrume() {
+        return idKlasruma;
+    }
     public String getEmail() {
         return email;
     }

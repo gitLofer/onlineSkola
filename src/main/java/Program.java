@@ -2,13 +2,14 @@ import java.util.*;
 
 public class Program {
 	public static void main(String[] args) {
-		System.out.print("Dobrodosli u nas Klasrum!\n\n\n");
-		System.out.print("Ukucajte broj opcije koju zelite: \n");
-		System.out.print("\t1) Ulogujte se\n");
-		System.out.print("\t2) Napravite nalog\n");
-		Scanner sken = new Scanner(System.in);
 		boolean b = false;
 		while(!b) {
+			System.out.print("Dobrodosli u nas Klasrum!\n\n\n");
+			System.out.print("Ukucajte broj opcije koju zelite: \n");
+			System.out.print("\t1) Ulogujte se\n");
+			System.out.print("\t2) Napravite nalog\n");
+			System.out.print("\t3) Prekinete program\n");
+			Scanner sken = new Scanner(System.in);
 			int izbor = sken.nextInt();
 			if(izbor == 1) {
 				String sifra, email, kriptosifra;
@@ -69,14 +70,18 @@ public class Program {
 				System.out.println(email);
 				System.out.println(id);
 				System.out.println(kriptosifra);
-				Osoba o = new Osoba(ime, prezime, (pol.equals("m")) ? Pol.Musko : Pol.Zensko, email, id, kriptosifra);
+				Osoba o = new Osoba(ime, prezime, (pol.equals("m")) ? Pol.Musko : Pol.Zensko, email, id, kriptosifra, null);
 				o.saveToJSON();
 				b = true;
+			}
+			else if (izbor == 3){
+				sken.close();
+				return;
 			}
 			else {
 				System.out.print("Nije ukucan validan broj\n");
 			}
+			sken.close();
 		}
-		sken.close();
 	}
 }
