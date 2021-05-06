@@ -22,12 +22,31 @@ public class Program {
 					sifra = sken.next();
 					kriptosifra = org.apache.commons.codec.digest.DigestUtils.sha256Hex(sifra);
 					o = new Osoba(email, kriptosifra);
+					//Ulogovano
 					if(o.getIme() != null) {
+						System.out.print("Dobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
+						System.out.print("Imate sledece opcije: \n");
+						System.out.print("\t1) Napravi novi klasrum\n");
+						System.out.print("\t2) Otvori moje klasrume\n");
+						System.out.print("\t3) Pridruzi se vec postojecem klasrumu\n");
+						int izbor0 = sken.nextInt();
+						if(izbor0 == 1) {
+							System.out.print("Da biste napravili klasrum, popunite sledeca polja: \n");
+							System.out.print("\tNaziv: ");
+							String naziv = sken.next();
+							System.out.print("\tOdeljenje: ");
+							String odeljenje = sken.next();
+							String id = UUID.randomUUID().toString();
+							Classroom c = new Classroom(o.getId(), new ArrayList<>(), naziv, odeljenje, new ArrayList<>(), id);
+							c.saveToJSON();
+							o.getKlasrume().add(c.getId());
+							o.saveToJSON();
+							System.out.print("Cestitamo! Napravili ste " + naziv + " klasrum!\n");
+						}
 						break;
 					}
 					System.out.print("\tPogresno ste ukucali email ili sifru\n");
 				}
-				System.out.print(o);
 				b = true;
 				
 			}
@@ -70,7 +89,7 @@ public class Program {
 				System.out.println(email);
 				System.out.println(id);
 				System.out.println(kriptosifra);
-				Osoba o = new Osoba(ime, prezime, (pol.equals("m")) ? Pol.Musko : Pol.Zensko, email, id, kriptosifra, null);
+				Osoba o = new Osoba(ime, prezime, (pol.equals("m")) ? Pol.Musko : Pol.Zensko, email, id, kriptosifra, new ArrayList<>());
 				o.saveToJSON();
 				b = true;
 			}

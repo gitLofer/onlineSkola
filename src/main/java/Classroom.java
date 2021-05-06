@@ -132,6 +132,18 @@ public class Classroom implements JSON_Interface<Classroom>{
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public String toString() {
+        return "Classroom{ \n" +
+                "\tprofesor='" + prof + "',\n" +
+                "\tnaziv='" + naziv + "',\n" +
+                "\todeljenje='" + odeljenje + "',\n" +
+                "\tucenici='" + idOsoba + "',\n" +
+                "\tid='" + id + "',\n" +
+                "\tpostovi='" + postovi + "'\n" +
+                '}';
+    }
 	
 	// Getteri i Setteri
 	public String getProf() {
