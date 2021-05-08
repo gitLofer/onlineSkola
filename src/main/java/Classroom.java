@@ -135,14 +135,26 @@ public class Classroom implements JSON_Interface<Classroom>{
     
     @Override
     public String toString() {
-        return "Classroom{ \n" +
-                "\tprofesor='" + prof + "',\n" +
-                "\tnaziv='" + naziv + "',\n" +
-                "\todeljenje='" + odeljenje + "',\n" +
-                "\tucenici='" + idOsoba + "',\n" +
-                "\tid='" + id + "',\n" +
-                "\tpostovi='" + postovi + "'\n" +
-                '}';
+	    String ucenici = "";
+        for (String ucenik: idOsoba) {
+            Osoba o = new Osoba(ucenik);
+            ucenici = ucenici + o.toString() + "\n";
+        }
+
+        String objave = "";
+        for (String p : postovi) {
+            Post post = new Post(p);
+            objave = objave + post.toString() + "\n";
+        }
+
+        String out = "== CLASSROOM " + naziv + " ==\n"
+                + odeljenje
+                + "\n\tProfesor: " + (new Osoba(prof)).toString()
+                + "\n\tUcenici: " + ucenici
+                + "\n\tObjave: " + objave
+                + "\n\n\tID: " + id;
+
+	    return out;
     }
 	
 	// Getteri i Setteri

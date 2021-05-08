@@ -13,11 +13,9 @@ public class Komentar{
     // Za debug, izmeniti kasnije
     @Override
     public String toString() {
-        return "Komentar{ \n" +
-                "\tautor='" + autor + "',\n" +
-                "\tdatumObjave=" + datumObjave + "',\n" +
-                "\tobjavaTekst='" + objavaTekst + "'\n" +
-                "} \n";
+        String out = "\n" + autor + " // " + datumObjave
+                + "\n" + objavaTekst;
+        return out;
     }
 
     // Getteri i Setteri

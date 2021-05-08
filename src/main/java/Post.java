@@ -163,15 +163,18 @@ public class Post implements JSON_Interface<Post>{
     // DEBUG
     @Override
     public String toString() {
-        return "Post{ \n" +
-                "\tpostsJSONLoc='" + postsJSONLoc + "',\n" +
-                "\tautorID='" + autorID + "',\n" +
-                "\tdatumObjave='" + datumObjave + "',\n" +
-                "\tobjavaTekst='" + objavaTekst + "',\n" +
-                "\tkomentari='" + komentari + "',\n" +
-                "\tattachments='" + attachments + "',\n" +
-                "\tid='" + id + "'\n" +
-                '}';
+        String comments = "";
+        for (Komentar k : komentari) {
+            comments = comments + k + "\n";
+        }
+
+        String out = (new Osoba(String.valueOf(autorID)).toString()) + " // " + datumObjave
+                + "\n" + objavaTekst
+                + comments
+                + attachments
+                + "\n\n" + "ID: " + id;
+
+        return out;
     }
 
     // Getteri i Setteri
