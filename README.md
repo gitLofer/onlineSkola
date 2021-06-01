@@ -25,5 +25,4 @@ Attachment (Osoba, ime, List\<File\>)
   - [X] *Napraviti public static funkciju interface-a za brisanje*
   - [X] *Povezati sve potrebne klase na interface*
   - [x] *Napraviti exception za InvalidIDLookup*
-- [ ] *Stvoriti osnovnu funkcionalnost (u vidu terminala)*
-- [ ] *Pretvoriti prethodnu funkcionalnost u GUI (JavaFX, JFrame, etc.)*
+- [ ] *Stvoriti ultimativnu funkcionalnost (u vidu terminala)*
