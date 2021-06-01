@@ -10,14 +10,14 @@ public class Program {
 			return;
 		}
 
-		System.out.print("Dobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
-		System.out.print("Imate sledece opcije: \n");
-		System.out.print("\t1) Napravi novi klasrum\n");
-		System.out.print("\t2) Otvori moje klasrume\n");
-		System.out.print("\t3) Pridruzi se vec postojecem klasrumu\n");
-		System.out.print("\t4) Prikazi sve opcije\n");
-		System.out.print("\t5) Log out\n");
 		while (true) {
+			System.out.print("Dobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
+			System.out.print("Imate sledece opcije: \n");
+			System.out.print("\t1) Napravi novi klasrum\n");
+			System.out.print("\t2) Otvori moje klasrume\n");
+			System.out.print("\t3) Pridruzi se vec postojecem klasrumu\n");
+			System.out.print("\t4) Prikazi sve opcije\n");
+			System.out.print("\t5) Log out\n");
 			String izbor0 = sken.nextLine();
 			switch (izbor0) {
 				case "1" -> {
@@ -40,6 +40,16 @@ public class Program {
 						System.out.println("Output from main");
 						System.out.println(k);
 					}
+				}
+				case "3" -> {
+					System.out.print("Ukucajte id klasruma: \n");
+					String idKlasruma = sken.nextLine();
+					Classroom c = new Classroom(idKlasruma);
+					o.getKlasrume().add(c.getId());
+					c.getOsobe().add(o.getId());
+					o.saveToJSON();
+					c.saveToJSON();
+					System.out.print("Uspesno ste dodani u " + c.getNaziv() + " klasrum!\n");
 				}
 				case "4" -> {
 					System.out.print("Imate sledece opcije: \n");
