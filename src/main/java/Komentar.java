@@ -1,10 +1,10 @@
 public class Komentar{
-    private int autor;
+    private String autor;
     private int datumObjave; // Posle cemo ovo https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
     // Za sada, UNIX EOCH tj. broj sek. od 1. Jan. 1970
     private String objavaTekst;
 
-    Komentar(int autor, int datumObjave, String objavaTekst) {
+    Komentar(String autor, int datumObjave, String objavaTekst) {
         this.autor = autor;
         this.datumObjave = datumObjave;
         this.objavaTekst = objavaTekst;
@@ -19,7 +19,7 @@ public class Komentar{
     }
 
     // Getteri i Setteri
-    public int getAutor() {
+    public String getAutor() {
         return autor;
     }
     public int getDatumObjave() {
@@ -29,7 +29,7 @@ public class Komentar{
         return objavaTekst;
     }
 
-    public void setAutor(int autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
     public void setDatumObjave(int datumObjave) {

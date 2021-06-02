@@ -10,11 +10,11 @@ import java.io.Reader;
 
 public class Attachment implements JSON_Interface<Attachment> {
     private final String attachJSONLoc = "attachment.json";
-    private int autorID;
+    private String autorID;
 	private String naziv;
 	private String id;
 
-    Attachment(int autorID, String naziv, String id) {
+    Attachment(String autorID, String naziv, String id) {
         this.autorID = autorID;
         this.naziv = naziv;
         this.id = id;
@@ -40,7 +40,7 @@ public class Attachment implements JSON_Interface<Attachment> {
                 String fetchedID = jsonObject.get("id").toString();
                 if (fetchedID.equals(id)) {
                     return new Attachment(
-                            ((Long) jsonObject.get("autorID")).intValue(),
+                            (String) jsonObject.get("autorID"),
                             (String) jsonObject.get("naziv"),
                             id
                     );
@@ -113,7 +113,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     public String getNaziv() {
         return naziv;
     }
-    public int getAutorID() {
+    public String getAutorID() {
         return autorID;
     }
     public String getId() { 
@@ -123,7 +123,7 @@ public class Attachment implements JSON_Interface<Attachment> {
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
-    public void setAutorID(int autorID) {
+    public void setAutorID(String autorID) {
         this.autorID = autorID;
     }
     public void setId(String id) {

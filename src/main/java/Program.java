@@ -10,6 +10,7 @@ public class Program {
 		Scanner sken = new Scanner(System.in);
 		Osoba o = mainMenu(sken);
 		if (o == null) {
+			sken.close();
 			return;
 		}
 
@@ -23,6 +24,7 @@ public class Program {
 			System.out.print("\t3) Pridruzi se vec postojecem klasrumu\n");
 			System.out.print("\t4) Prikazi sve opcije\n");
 			System.out.print("\t5) Log out\n");
+			System.out.print("\t6) Prekinete program\n");
 			String izbor0 = sken.nextLine();
 			switch (izbor0) {
 				case "1" -> {
@@ -68,26 +70,27 @@ public class Program {
 					// Dodati opcionalno otvaranje ovog klasruma? Tj. pozivanje funkcije classroomMenu?
 				}
 				case "4" -> {
-					System.out.print("Imate sledece opcije: \n");
-					System.out.print("\t1) Napravi novi klasrum\n");
-					System.out.print("\t2) Otvori moje klasrume\n");
-					System.out.print("\t3) Pridruzi se vec postojecem klasrumu\n");
-					System.out.print("\t4) Prikazi sve opcije\n");
-					System.out.print("\t5) Log out\n");
+					continue;
 				}
 
 				case "5" -> {
 					o = mainMenu(sken);
 					if (o == null) {
+						sken.close();
 						return;
 					}
 				}
+
+				case "6" -> {
+					sken.close();
+					return;
+				}
+
 				default -> {
 					System.out.println("Nije ukucan validan broj!");
 				}
 			}
 		}
-		// sken.close();
 	}
 
 	public static Osoba mainMenu(Scanner sken) {
@@ -186,8 +189,19 @@ public class Program {
 			String opcija = sken.nextLine();
 			switch (opcija){
 				case "1" -> {
+					System.out.print("\nPopunite sledeca polja da biste napravili objavu: \n");
 					System.out.print("\n\tTekst objave: ");
 					String tekstObjave = sken.nextLine();
+					System.out.print("\nUkucajte putanje do fajlova ili ukucajte '0' ako nemate vise fajlova: \n");
+					ArrayList<String> att = new ArrayList<>();
+					for(int i = 1; i <= 5; i++){
+						System.out.print("\n\tPutanja do " + i + ". fajla: ");
+						String put = sken.nextLine();
+						if(put.equals("0")){
+							break;
+						}
+						att.add(put);
+					}
 //					Napraviti objekat Post, sacuvati u posts.json, dodati u classroom, sacuvati u clasroom.json
 					// Post zaDodati = new Post(user.getId() , 1, tekstObjave, new ArrayList<Komentar>(), new ArrayList<Integer>(), UUID.randomUUID().toString());
 					System.out.print("Objave je uspesno dodata!\n");

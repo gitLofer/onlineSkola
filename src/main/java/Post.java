@@ -11,14 +11,14 @@ import java.util.*;
 
 public class Post implements JSON_Interface<Post>{
     private final String postsJSONLoc = "posts.json";
-    private int autorID;
+    private String autorID;
     private int datumObjave; // Videti https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
     private String objavaTekst;
     private ArrayList<Komentar> komentari;
-    private ArrayList<Integer> attachments;
+    private ArrayList<String> attachments;
     private String id;
 
-    Post(int autorID, int datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<Integer> attachments, String id) {
+    Post(String autorID, int datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<String> attachments, String id) {
         this.autorID = autorID;
         this.datumObjave = datumObjave;
         this.objavaTekst = objavaTekst;
@@ -52,14 +52,14 @@ public class Post implements JSON_Interface<Post>{
                 // otprilike loadFromJSONObject
                 if (fetchedID.equals(id)) {
                     // DEBUG: System.out.println("Matching Post ID found");
-                    int autorID = ((Long) jsonObject.get("autor")).intValue();
+                    String autorID = jsonObject.get("autor").toString();
                     int datumObjave = ((Long) jsonObject.get("datumObjave")).intValue();
                     String tekst = jsonObject.get("objavaTekst").toString();
 
                     JSONArray att = (JSONArray) jsonObject.get("attachments");
-                    ArrayList<Integer> attachment = new ArrayList<>();
+                    ArrayList<String> attachment = new ArrayList<>();
                     for (int i = 0; i < att.size(); ++i) {
-                        attachment.add( Integer.valueOf( ( (Long) att.get(i)).intValue() ) );
+                        attachment.add(att.get(i).toString());
                     }
 
                     
@@ -68,7 +68,7 @@ public class Post implements JSON_Interface<Post>{
                     JSONArray commentArray = (JSONArray) jsonObject.get("komentari");
                     for (int i = 0; i < commentArray.size(); ++i) {
                         JSONObject currObj = (JSONObject) commentArray.get(i);
-                        int commentAutorID = ((Long) currObj.get("autor")).intValue();
+                        String commentAutorID = currObj.get("autor").toString();
                         int commentDatumObjave = ((Long) currObj.get("datumObjave")).intValue();
                         String commentTekst = currObj.get("objavaTekst").toString();
 
@@ -105,7 +105,7 @@ public class Post implements JSON_Interface<Post>{
             JSONParser parser = new JSONParser();
             Reader reader = new FileReader(jsonLoc + postsJSONLoc);
             JSONArray jsonArray = (JSONArray) parser.parse(reader);
-            // int autorID, int datumObjave, String objavaTekst, List<Komentar> komentari, int id
+            // String autorID, int datumObjave, String objavaTekst, List<Komentar> komentari, int id
             JSONObject obj = new JSONObject();
             obj.put("id", this.id);
             obj.put("autor", this.autorID);
@@ -168,7 +168,7 @@ public class Post implements JSON_Interface<Post>{
             comments = comments + k + "\n";
         }
 
-        String out = (new Osoba(String.valueOf(autorID)).toString()) + " // " + datumObjave
+        String out = autorID + " // " + datumObjave
                 + "\n" + objavaTekst
                 + comments
                 + attachments
@@ -178,7 +178,7 @@ public class Post implements JSON_Interface<Post>{
     }
 
     // Getteri i Setteri
-    public int getAutorID() {
+    public String getAutorID() {
         return autorID;
     }
     public int getDatumObjave() {
@@ -188,7 +188,7 @@ public class Post implements JSON_Interface<Post>{
         return objavaTekst;
     }
 
-    public void setAutorID(int autorID) { 
+    public void setAutorID(String autorID) {
     	this.autorID = autorID; 
     }
     public void setDatumObjave(int datumObjave) {
