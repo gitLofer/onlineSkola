@@ -1,3 +1,9 @@
+import org.apache.commons.io.FilenameUtils;
+
+import javax.crypto.spec.PSource;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 public class Program {
@@ -184,8 +190,7 @@ public class Program {
 			System.out.print("\nImate sledece opcije: \n");
 			System.out.print("\t1) Dodaj objavu\n");
 			System.out.print("\t2) Dodaj komentar na objavu\n");
-			System.out.print("\t3) \n");
-			System.out.print("\t4) Nazad na glavni meni\n");
+			System.out.print("\t3) Nazad na glavni meni\n");
 			String opcija = sken.nextLine();
 			switch (opcija){
 				case "1" -> {
@@ -193,26 +198,50 @@ public class Program {
 					System.out.print("\n\tTekst objave: ");
 					String tekstObjave = sken.nextLine();
 					System.out.print("\nUkucajte putanje do fajlova ili ukucajte '0' ako nemate vise fajlova: \n");
-					ArrayList<String> att = new ArrayList<>();
+					ArrayList<String> att = new ArrayList<String>();
+					ArrayList<String> attIDList = new ArrayList<String>();
 					for(int i = 1; i <= 5; i++){
 						System.out.print("\n\tPutanja do " + i + ". fajla: ");
 						String put = sken.nextLine();
 						if(put.equals("0")){
 							break;
 						}
-						att.add(put);
+						try {
+							File source = new File(put);
+							String attachmentID = UUID.randomUUID().toString();
+							String destinationPath = "src/main/resources/files/" + attachmentID + '.'
+									+ FilenameUtils.getExtension(source.toPath().toString());
+							Files.copy(source.toPath(), new File(destinationPath).toPath());
+							Attachment a = new Attachment(user.getId(), source.getName().toString(), attachmentID);
+							a.saveToJSON();
+							attIDList.add(attachmentID);
+						} catch (IOException e) {
+							e.printStackTrace();
+							System.out.println("\nDatoj putanji se ne moze pristupiti. Pokusajte ponovo.");
+							i -= 1;
+							continue;
+						}
 					}
 //					Napraviti objekat Post, sacuvati u posts.json, dodati u classroom, sacuvati u clasroom.json
-					// Post zaDodati = new Post(user.getId() , 1, tekstObjave, new ArrayList<Komentar>(), new ArrayList<Integer>(), UUID.randomUUID().toString());
+					Post zaDodati = new Post(user.getId() , 0, tekstObjave, new ArrayList<Komentar>(), attIDList, UUID.randomUUID().toString());
+					zaDodati.saveToJSON();
+					clasroom.getPostovi().add(zaDodati.getId());
+					clasroom.saveToJSON();
 					System.out.print("Objave je uspesno dodata!\n");
 				}
 				case "2" ->{
+					System.out.println("Na koju objavu hocete da dodate komentar? (1 - " + (clasroom.getPostovi().size()) + ")");
+					int postIndex = Integer.parseInt( sken.nextLine() );
+					System.out.print("\nPopunite sledeca polja da biste dodali komentar: \n");
+					System.out.print("\n\tTekst komentara: ");
+					String tekstKomentara = sken.nextLine();
 
+					Komentar zaDodatiKomentar = new Komentar(user.getId(), 0, tekstKomentara);
+					Post zaDodatiPost = new Post ( clasroom.getPostovi().get(postIndex-1) );
+					zaDodatiPost.getKomentari().add(zaDodatiKomentar);
+					zaDodatiPost.saveToJSON();
 				}
 				case "3" ->{
-
-				}
-				case "4" -> {
 					System.out.println("Vracanje na glavni meni...\n");
 					return;
 				}

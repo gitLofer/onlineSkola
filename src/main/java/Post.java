@@ -187,6 +187,12 @@ public class Post implements JSON_Interface<Post>{
     public String getObjavaTekst() {
         return objavaTekst;
     }
+    public String getId() {
+        return id;
+    }
+    public ArrayList<Komentar> getKomentari() {
+        return komentari;
+    }
 
     public void setAutorID(String autorID) {
     	this.autorID = autorID; 
