@@ -103,10 +103,8 @@ public class Attachment implements JSON_Interface<Attachment> {
 
     @Override
     public String toString() {
-        if (id == null) {
-            return "";
-        }
-        return "Autor: " + autorID + ", naziv: " + naziv + "\n";
+        Osoba o = new Osoba(autorID);
+        return "\n\tAutor: " + o.getIme() + " " + o.getPrezime() + ", naziv: " + naziv + "\n";
     }
 
     // Getteri i Setteri

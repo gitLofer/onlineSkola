@@ -13,8 +13,9 @@ public class Komentar{
     // Za debug, izmeniti kasnije
     @Override
     public String toString() {
-        String out = "\n" + autor + " // " + datumObjave
-                + "\n" + objavaTekst;
+        Osoba o = new Osoba(autor);
+        String out = "\n\tKomentari:\n\tAutor: " + o.getIme() + " " + o.getPrezime() + "\n\t" + datumObjave
+                + "\n\t" + objavaTekst;
         return out;
     }
 

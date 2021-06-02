@@ -51,7 +51,7 @@ public class Program {
 						Classroom k = new Classroom(c);
 						System.out.println(k);
 					}
-					System.out.println("Ukucajte broj klasruma koji hocete da pristupite (1 - " + klasrumi.size() + " ). Ukucajte 0 da se vratite nazad.");
+					System.out.println("Ukucajte broj klasruma koji hocete da pristupite (1 - " + klasrumi.size() + "). Ukucajte 0 da se vratite nazad.");
 					int selected = Integer.parseInt( sken.nextLine() );
 					if (selected == 0) {
 						break;

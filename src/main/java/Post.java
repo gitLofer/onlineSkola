@@ -49,7 +49,6 @@ public class Post implements JSON_Interface<Post>{
 
                 String fetchedID = jsonObject.get("id").toString();
 
-                // otprilike loadFromJSONObject
                 if (fetchedID.equals(id)) {
                     // DEBUG: System.out.println("Matching Post ID found");
                     String autorID = jsonObject.get("autor").toString();
@@ -75,14 +74,8 @@ public class Post implements JSON_Interface<Post>{
                         Komentar k = new Komentar (commentAutorID,commentDatumObjave,commentTekst);
                         comments.add(k);
 
-//                        comments.add(new Komentar(commentID, commentDatumObjave, commentTekst, new ArrayList<>()));
-//                      // Pre bi radio implementaciju SQL-a u asembleru  nego ovo
-//                        comments.add(new Komentar(commentID, commentDatumObjave, new ArrayList<>() ,commentTekst, comments.get(i)));
 
                     }
-                    // DEBUG:
-                    // System.out.println("Successfuly ran, results for 0 are:");
-                    // System.out.println(comments.get(0));
                     return (new Post(autorID, datumObjave, tekst, comments, attachment, id));
                 }
             }
@@ -157,9 +150,6 @@ public class Post implements JSON_Interface<Post>{
         }
     }
 
-    // Nesto trebamo da uradimo za razlikovanje Material i Assignment. Neku formu predaje da ima As dok Mat ima neki "preview"?
-    // Ili da napravimo da Assignment nasledjuje Material; tu bi Material zapravo bila ova klasa tj. Post?
-
     // DEBUG
     @Override
     public String toString() {
@@ -167,12 +157,13 @@ public class Post implements JSON_Interface<Post>{
         for (Komentar k : komentari) {
             comments = comments + k + "\n";
         }
-
-        String out = autorID + " // " + datumObjave
-                + "\n" + objavaTekst
-                + comments
-                + attachments
-                + "\nID objave: " + id;
+        Osoba o = new Osoba(autorID);
+        String out = "\n\tAutor: " + o.getIme() + " " + o.getPrezime()
+                + "\n\t" + datumObjave
+                + "\n\t" + objavaTekst
+                + "\n\t" + comments
+                + "\n\t" + attachments
+                + "\n\tID objave: " + id;
 
         return out;
     }

@@ -147,12 +147,12 @@ public class Classroom implements JSON_Interface<Classroom>{
             objave = objave + post.toString() + "\n";
         }
 
-        String out = "== CLASSROOM " + naziv + " ==\n"
+        String out = "== CLASSROOM " + naziv + " ==\nOdeljenje: "
                 + odeljenje
                 + "\n\tProfesor: " + (new Osoba(prof)).toString()
                 + "\n\tUcenici: " + ucenici
                 + "\n\tObjave: " + objave
-                + "\n\n\tID: " + id;
+                + "\n\n\tID klasruma: " + id;
 
 	    return out;
     }
