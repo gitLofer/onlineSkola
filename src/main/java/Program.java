@@ -2,13 +2,18 @@ import java.util.*;
 
 public class Program {
 	public static void main(String[] args) {
-		// TODO: Dodati 3)
+		// TODO: Dodati provere
+		// 1 - Profesor ne moze biti i ucenik istog klasruma
+		// 2 - Dva ista ucenika ne smeju da budu deo istog klasruma
+		// 3 - Dva naloga ne smeju da imaju isti email
 
 		Scanner sken = new Scanner(System.in);
 		Osoba o = mainMenu(sken);
 		if (o == null) {
 			return;
 		}
+
+		Classroom selectedClass = null;
 
 		while (true) {
 			System.out.print("Dobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
@@ -31,6 +36,7 @@ public class Program {
 					c.saveToJSON();
 					o.getKlasrume().add(c.getId());
 					o.saveToJSON();
+					selectedClass = c;
 					System.out.print("Cestitamo! Napravili ste " + naziv + " klasrum!\n");
 				}
 				case "2" -> {
@@ -39,6 +45,14 @@ public class Program {
 						Classroom k = new Classroom(c);
 						System.out.println("Output from main");
 						System.out.println(k);
+					}
+					System.out.println("Ukucajte broj klasruma koji hocete da pristupite (1 - " + klasrumi.size() + " ). Ukucajte 0 da se vratite nazad.");
+					int selected = Integer.parseInt( sken.nextLine() );
+					if (selected == 0) {
+						break;
+					}else{
+						selectedClass = new Classroom(klasrumi.get(selected-1));
+						classroomMenu(sken, selectedClass, o);
 					}
 				}
 				case "3" -> {
@@ -49,7 +63,9 @@ public class Program {
 					c.getOsobe().add(o.getId());
 					o.saveToJSON();
 					c.saveToJSON();
+					selectedClass = c;
 					System.out.print("Uspesno ste dodani u " + c.getNaziv() + " klasrum!\n");
+					// Dodati opcionalno otvaranje ovog klasruma? Tj. pozivanje funkcije classroomMenu?
 				}
 				case "4" -> {
 					System.out.print("Imate sledece opcije: \n");
@@ -61,8 +77,10 @@ public class Program {
 				}
 
 				case "5" -> {
-					sken.close();
-					return;
+					o = mainMenu(sken);
+					if (o == null) {
+						return;
+					}
 				}
 				default -> {
 					System.out.println("Nije ukucan validan broj!");
@@ -154,5 +172,40 @@ public class Program {
 				}
 			}
 			return null;
+	}
+
+	public static void classroomMenu(Scanner sken, Classroom clasroom, Osoba user) {
+		boolean isProfessor = user.getId().equals(clasroom.getProf());
+		while (true) {
+			System.out.println(clasroom);
+			System.out.print("\nImate sledece opcije: \n");
+			System.out.print("\t1) Dodaj objavu\n");
+			System.out.print("\t2) Dodaj komentar na objavu\n");
+			System.out.print("\t3) \n");
+			System.out.print("\t4) Nazad na glavni meni\n");
+			String opcija = sken.nextLine();
+			switch (opcija){
+				case "1" -> {
+					System.out.print("\n\tTekst objave: ");
+					String tekstObjave = sken.nextLine();
+//					Napraviti objekat Post, sacuvati u posts.json, dodati u classroom, sacuvati u clasroom.json
+					// Post zaDodati = new Post(user.getId() , 1, tekstObjave, new ArrayList<Komentar>(), new ArrayList<Integer>(), UUID.randomUUID().toString());
+					System.out.print("Objave je uspesno dodata!\n");
+				}
+				case "2" ->{
+
+				}
+				case "3" ->{
+
+				}
+				case "4" -> {
+					System.out.println("Vracanje na glavni meni...\n");
+					return;
+				}
+				default -> {
+					System.out.println("Nije ukucan validan broj!");
+				}
+			}
+		}
 	}
 }
