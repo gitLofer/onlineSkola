@@ -103,10 +103,7 @@ public class Attachment implements JSON_Interface<Attachment> {
 
     @Override
     public String toString() {
-        return "Attachment{ \n" +
-                "\tautorID='" + autorID + "',\n" +
-                "\tnaziv='" + naziv + "'\n" +
-                "}";
+        return "Autor: " + autorID + ", naziv: " + naziv + "\n";
     }
 
     // Getteri i Setteri

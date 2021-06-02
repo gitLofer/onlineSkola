@@ -8,10 +8,6 @@ import java.util.*;
 
 public class Program {
 	public static void main(String[] args) {
-		// TODO: Dodati provere
-		// 1 - Profesor ne moze biti i ucenik istog klasruma
-		// 2 - Dva ista ucenika ne smeju da budu deo istog klasruma
-		// 3 - Dva naloga ne smeju da imaju isti email
 
 		Scanner sken = new Scanner(System.in);
 		Osoba o = mainMenu(sken);
@@ -23,7 +19,7 @@ public class Program {
 		Classroom selectedClass = null;
 
 		while (true) {
-			System.out.print("Dobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
+			System.out.print("\n\nDobrodosao " + o.getIme() + " " + o.getPrezime() + " nazad!\n\n");
 			System.out.print("Imate sledece opcije: \n");
 			System.out.print("\t1) Napravi novi klasrum\n");
 			System.out.print("\t2) Otvori moje klasrume\n");
@@ -66,6 +62,17 @@ public class Program {
 				case "3" -> {
 					System.out.print("Ukucajte id klasruma: \n");
 					String idKlasruma = sken.nextLine();
+					boolean vec = false;
+					for(int i = 0; i < o.getKlasrume().size(); i++){
+						if(o.getKlasrume().get(i).equals(idKlasruma)){
+							System.out.println("Vec pripadate ovom klasrumu!");
+							vec = true;
+							break;
+						}
+					}
+					if(vec){
+						continue;
+					}
 					Classroom c = new Classroom(idKlasruma);
 					o.getKlasrume().add(c.getId());
 					c.getOsobe().add(o.getId());
@@ -73,7 +80,7 @@ public class Program {
 					c.saveToJSON();
 					selectedClass = c;
 					System.out.print("Uspesno ste dodani u " + c.getNaziv() + " klasrum!\n");
-					// Dodati opcionalno otvaranje ovog klasruma? Tj. pozivanje funkcije classroomMenu?
+					classroomMenu(sken, selectedClass, o);
 				}
 				case "4" -> {
 					continue;
@@ -102,7 +109,7 @@ public class Program {
 	public static Osoba mainMenu(Scanner sken) {
 			boolean b = false;
 			while(!b) {
-				System.out.print("Dobrodosli u nas Klasrum!\n\n\n");
+				System.out.print("\n\nDobrodosli u nas Klasrum!\n\n\n");
 				System.out.print("Ukucajte broj opcije koju zelite: \n");
 				System.out.print("\t1) Ulogujte se\n");
 				System.out.print("\t2) Napravite nalog\n");
@@ -146,8 +153,17 @@ public class Program {
 							}
 							System.out.print("\tPostoje samo dva pola\n");
 						}
-						System.out.print("\tEmail: ");
-						String email = sken.nextLine();
+						String email;
+						while (true){
+							System.out.print("\tEmail: ");
+							email = sken.nextLine();
+							Osoba privremen = new Osoba("", "", Pol.Musko, email, "", "", null);
+							if(!privremen.register(email)){
+								System.out.println("Dati email je zauzet!");
+								continue;
+							}
+							break;
+						}
 						String id = UUID.randomUUID().toString();
 						String sifra, sifrap, kriptosifra;
 						while (true) {
@@ -162,14 +178,9 @@ public class Program {
 							kriptosifra = org.apache.commons.codec.digest.DigestUtils.sha256Hex(sifra);
 							break;
 						}
-						System.out.println(ime);
-						System.out.println(prezime);
-						System.out.println(pol);
-						System.out.println(email);
-						System.out.println(id);
-						System.out.println(kriptosifra);
 						Osoba o = new Osoba(ime, prezime, (pol.equals("m")) ? Pol.Musko : Pol.Zensko, email, id, kriptosifra, new ArrayList<>());
 						o.saveToJSON();
+						System.out.println("Uspesno ste napravili nalog!");
 						return o;
 					}
 					case "3" -> {
@@ -198,7 +209,6 @@ public class Program {
 					System.out.print("\n\tTekst objave: ");
 					String tekstObjave = sken.nextLine();
 					System.out.print("\nUkucajte putanje do fajlova ili ukucajte '0' ako nemate vise fajlova: \n");
-					ArrayList<String> att = new ArrayList<String>();
 					ArrayList<String> attIDList = new ArrayList<String>();
 					for(int i = 1; i <= 5; i++){
 						System.out.print("\n\tPutanja do " + i + ". fajla: ");
@@ -222,7 +232,6 @@ public class Program {
 							continue;
 						}
 					}
-//					Napraviti objekat Post, sacuvati u posts.json, dodati u classroom, sacuvati u clasroom.json
 					Post zaDodati = new Post(user.getId() , 0, tekstObjave, new ArrayList<Komentar>(), attIDList, UUID.randomUUID().toString());
 					zaDodati.saveToJSON();
 					clasroom.getPostovi().add(zaDodati.getId());

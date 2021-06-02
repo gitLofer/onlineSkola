@@ -165,6 +165,27 @@ public class Osoba implements JSON_Interface<Osoba> {
         return null;
     }
 
+    public boolean register(String email){
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader(jsonLoc + osobeJSONLoc)) {
+
+            JSONArray jsonArray = (JSONArray) parser.parse(reader);
+            
+            for (JSONObject jsonObject : (Iterable<JSONObject>) jsonArray) {
+                String fetchedEmail = jsonObject.get("email").toString();
+
+                if (email.equals(fetchedEmail)) {
+                	return false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     @Override
     public void saveToJSON() {
         // DEBUG: System.out.println("Saving!");
