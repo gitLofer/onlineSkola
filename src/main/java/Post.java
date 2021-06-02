@@ -12,13 +12,13 @@ import java.util.*;
 public class Post implements JSON_Interface<Post>{
     private final String postsJSONLoc = "posts.json";
     private String autorID;
-    private int datumObjave; // Videti https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
+    private String datumObjave; // Videti https://docs.oracle.com/javase/8/docs/api/java/sql/Date.html
     private String objavaTekst;
     private ArrayList<Komentar> komentari;
     private ArrayList<String> attachments;
     private String id;
 
-    Post(String autorID, int datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<String> attachments, String id) {
+    Post(String autorID, String datumObjave, String objavaTekst, ArrayList<Komentar> komentari, ArrayList<String> attachments, String id) {
         this.autorID = autorID;
         this.datumObjave = datumObjave;
         this.objavaTekst = objavaTekst;
@@ -53,7 +53,7 @@ public class Post implements JSON_Interface<Post>{
                 if (fetchedID.equals(id)) {
                     // DEBUG: System.out.println("Matching Post ID found");
                     String autorID = jsonObject.get("autor").toString();
-                    int datumObjave = ((Long) jsonObject.get("datumObjave")).intValue();
+                    String datumObjave = jsonObject.get("datumObjave").toString();
                     String tekst = jsonObject.get("objavaTekst").toString();
 
                     JSONArray att = (JSONArray) jsonObject.get("attachments");
@@ -69,7 +69,7 @@ public class Post implements JSON_Interface<Post>{
                     for (int i = 0; i < commentArray.size(); ++i) {
                         JSONObject currObj = (JSONObject) commentArray.get(i);
                         String commentAutorID = currObj.get("autor").toString();
-                        int commentDatumObjave = ((Long) currObj.get("datumObjave")).intValue();
+                        String commentDatumObjave = currObj.get("datumObjave").toString();
                         String commentTekst = currObj.get("objavaTekst").toString();
 
                         Komentar k = new Komentar (commentAutorID,commentDatumObjave,commentTekst);
@@ -163,7 +163,7 @@ public class Post implements JSON_Interface<Post>{
     // DEBUG
     @Override
     public String toString() {
-        String comments = "";
+        String comments = "\n";
         for (Komentar k : komentari) {
             comments = comments + k + "\n";
         }
@@ -172,7 +172,7 @@ public class Post implements JSON_Interface<Post>{
                 + "\n" + objavaTekst
                 + comments
                 + attachments
-                + "\n\n" + "ID: " + id;
+                + "\nID objave: " + id;
 
         return out;
     }
@@ -181,7 +181,7 @@ public class Post implements JSON_Interface<Post>{
     public String getAutorID() {
         return autorID;
     }
-    public int getDatumObjave() {
+    public String getDatumObjave() {
         return datumObjave;
     }
     public String getObjavaTekst() {
@@ -197,7 +197,7 @@ public class Post implements JSON_Interface<Post>{
     public void setAutorID(String autorID) {
     	this.autorID = autorID; 
     }
-    public void setDatumObjave(int datumObjave) {
+    public void setDatumObjave(String datumObjave) {
         this.datumObjave = datumObjave;
     }
     public void setObjavaTekst(String objavaTekst) {

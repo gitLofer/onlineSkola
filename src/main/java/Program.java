@@ -4,6 +4,8 @@ import javax.crypto.spec.PSource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Program {
@@ -47,7 +49,6 @@ public class Program {
 					ArrayList<String> klasrumi = o.getKlasrume();
 					for (String c : klasrumi) {
 						Classroom k = new Classroom(c);
-						System.out.println("Output from main");
 						System.out.println(k);
 					}
 					System.out.println("Ukucajte broj klasruma koji hocete da pristupite (1 - " + klasrumi.size() + " ). Ukucajte 0 da se vratite nazad.");
@@ -232,7 +233,9 @@ public class Program {
 							continue;
 						}
 					}
-					Post zaDodati = new Post(user.getId() , 0, tekstObjave, new ArrayList<Komentar>(), attIDList, UUID.randomUUID().toString());
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+					LocalDateTime now = LocalDateTime.now();
+					Post zaDodati = new Post(user.getId() , dtf.format(now), tekstObjave, new ArrayList<Komentar>(), attIDList, UUID.randomUUID().toString());
 					zaDodati.saveToJSON();
 					clasroom.getPostovi().add(zaDodati.getId());
 					clasroom.saveToJSON();
@@ -245,7 +248,9 @@ public class Program {
 					System.out.print("\n\tTekst komentara: ");
 					String tekstKomentara = sken.nextLine();
 
-					Komentar zaDodatiKomentar = new Komentar(user.getId(), 0, tekstKomentara);
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+					LocalDateTime now = LocalDateTime.now();
+					Komentar zaDodatiKomentar = new Komentar(user.getId(), dtf.format(now), tekstKomentara);
 					Post zaDodatiPost = new Post ( clasroom.getPostovi().get(postIndex-1) );
 					zaDodatiPost.getKomentari().add(zaDodatiKomentar);
 					zaDodatiPost.saveToJSON();
